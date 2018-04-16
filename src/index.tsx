@@ -1,43 +1,13 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-// import App from './App';
-// import './index.css';
-// import registerServiceWorker from './registerServiceWorker';
+import App from './App';
+import 'bootstrap/dist/css/bootstrap.css';
+import registerServiceWorker from './registerServiceWorker';
 
-// ReactDOM.render(
-//   <App />,
-//   document.getElementById('root') as HTMLElement
-// );
-// registerServiceWorker();
+ReactDOM.render(
+  <App />,
+  document.getElementById('root') as HTMLElement
+);
+registerServiceWorker();
 
-const lista = [1, 2, 3, 4, 5].reverse()
-
-
-const Section = (props: { list: any[], title: string }) => {
-  return <div>
-    <h1>{props.title || 'Todos'}</h1>
-    <ul>
-      {props.list.map(
-        x => <li key={x} className="list-item"
-                style={{ color: x % 2 == 0 ? 'red' : 'black' }} >
-            Item {x}
-        </li>
-      )}
-    </ul>
-  </div>
-}
-
-setInterval(() => {
-  lista.unshift(lista.length + 1)
-
-  ReactDOM.render(
-     <Section list={lista} title="Todos" />, 
-     document.getElementById('root'))
-}, 1500)
-
-
-
-
-window['React'] = React;
-window['ReactDOM'] = ReactDOM
 
