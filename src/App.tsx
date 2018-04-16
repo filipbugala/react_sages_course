@@ -3,7 +3,8 @@ import { Todo } from './todos/todo'
 import { Todos } from './todos/Todos';
 
 interface State {
-  todos: Todo[]
+  todos: Todo[],
+  archived: Todo[]
 }
 
 class App extends React.Component<{}, State> {
@@ -15,7 +16,8 @@ class App extends React.Component<{}, State> {
         title: 'Test Todo',
         completed: false
       }
-    ]
+    ],
+    archived:[]
   }
 
   addTodo = (title:string) => {
@@ -37,6 +39,14 @@ class App extends React.Component<{}, State> {
           <div className="col">
 
             <Todos todos={this.state.todos} 
+                  editor={true}
+                  addTodo={this.addTodo}/>
+
+          </div>
+          <div className="col">
+
+            <Todos title="Archived" 
+                  todos={this.state.archived} 
                   addTodo={this.addTodo}/>
 
           </div>

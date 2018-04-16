@@ -8,7 +8,9 @@ interface State {
 }
 
 interface Props {
+  title?: string,
   todos: Todo[],
+  editor?: boolean,
   addTodo: (title: string) => void
 }
 
@@ -18,31 +20,42 @@ export class Todos extends React.Component<Props, State> {
     newTitle: ''
   }
 
+  static defaultProps = {
+    title: 'Todos'
+  }
+
   titleChange(event: ChangeEvent<HTMLInputElement>) {
     this.setState({
       newTitle: event.target.value
     })
   }
 
-  addTodo() { 
+  addTodo() {
     this.props.addTodo(this.state.newTitle)
     this.setState({
-      newTitle:''
+      newTitle: ''
     })
   }
 
   render() {
     return <div>
-      <h3>Todos</h3>
-      <TodoList todos={this.props.todos} />
+      <h3>{this.props.title}</h3>
+      {this.props.todos.length ?
+        <TodoList todos={this.props.todos} />
+        :
+        <p>Nothing to show here</p>
+      }
+      {this.props.editor ?
 
-      <div className="input-group">
-        <input type="text" className="form-control"
-          value={this.state.newTitle}
-          onKeyUp={e => e.key == "Enter" && this.addTodo()}
-          onChange={e => this.titleChange(e)} />
-        <button className="btn" onClick={e => this.addTodo()}>Add</button>
-      </div>
+        <div className="input-group mt-2">
+          <input type="text" className="form-control"
+            value={this.state.newTitle}
+            onKeyUp={e => e.key == "Enter" && this.addTodo()}
+            onChange={e => this.titleChange(e)} />
+          <button className="btn" onClick={e => this.addTodo()}>Add</button>
+        </div>
+
+        : null}
 
     </div>
   }
