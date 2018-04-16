@@ -4,26 +4,39 @@ import { Todo } from './todos/todo';
 import { ChangeEvent } from 'react';
 // import logo from './logo.svg';
 
-class App extends React.Component {
+interface State{
+  todos:Todo[], newTitle:string, counter:number
+}
 
-  state = {
+class App extends React.Component<{},State> {
+
+  state: State = {
     todos: [
       {
         id: 123,
         title: 'Test Todo',
         completed: false
       }
-    ] as Todo[],
-    newTitle:''
+    ],
+    newTitle: '',
+    counter: 0
   }
+
 
   titleChange(event: ChangeEvent<HTMLInputElement>) {
     // event.persist()
     const value = event.target.value;
 
-      setTimeout( () => {
-        console.log(value);
-      },0)
+    
+    this.setState({
+      newTitle: value
+    })
+
+    this.setState(prevState => {
+      return {
+        counter: prevState.newTitle.length
+      }
+    })
   }
 
   public render() {
@@ -36,10 +49,10 @@ class App extends React.Component {
             <TodoList todos={this.state.todos} />
 
             <div className="input-group">
-              <input type="text" className="form-control" onChange={this.titleChange} />
+              <input type="text" className="form-control" onChange={e => this.titleChange(e)} />
               <button className="btn">Add</button>
             </div>
-            {  }
+            {this.state.counter}
 
           </div>
         </div>
