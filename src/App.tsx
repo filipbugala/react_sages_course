@@ -17,10 +17,10 @@ class App extends React.Component<{}, State> {
         completed: false
       }
     ],
-    archived:[]
+    archived: []
   }
 
-  addTodo = (title:string) => {
+  addTodo = (title: string) => {
     const todo: Todo = {
       id: Date.now(),
       title,
@@ -32,22 +32,48 @@ class App extends React.Component<{}, State> {
     }))
   }
 
+  archiveTodo = (id: Todo['id']) => {
+    this.setState((prevState) => {
+      const todo = prevState.todos.find(
+        todo => todo.id == id
+      )
+      return todo? {
+        todos: prevState.todos.filter(
+          todo => todo.id !== id
+        ),
+        archived: [...prevState.archived, todo]
+      } : null
+    })
+
+  }
+
+  removeTodo = (id: Todo['id']) => {
+    this.setState(prevState => ({
+      archived: prevState.archived.filter(
+        todo => todo.id !== id
+      )
+    }))
+
+  }
+
   public render() {
     return (
       <div className="container">
         <div className="row">
           <div className="col">
 
-            <Todos todos={this.state.todos} 
-                  editor={true}
-                  addTodo={this.addTodo}/>
+            <Todos todos={this.state.todos}
+              editor={true}
+              removeTodo={this.archiveTodo}
+              addTodo={this.addTodo} />
 
           </div>
           <div className="col">
 
-            <Todos title="Archived" 
-                  todos={this.state.archived} 
-                  addTodo={this.addTodo}/>
+            <Todos title="Archived"
+              todos={this.state.archived}
+              removeTodo={this.removeTodo}
+              addTodo={this.addTodo} />
 
           </div>
         </div>

@@ -12,6 +12,7 @@ interface Props {
   todos: Todo[],
   editor?: boolean,
   addTodo: (title: string) => void
+  removeTodo: (id:Todo['id']) => void
 }
 
 export class Todos extends React.Component<Props, State> {
@@ -40,11 +41,14 @@ export class Todos extends React.Component<Props, State> {
   render() {
     return <div>
       <h3>{this.props.title}</h3>
+
       {this.props.todos.length ?
-        <TodoList todos={this.props.todos} />
+        <TodoList todos={this.props.todos} 
+                  removeTodo={this.props.removeTodo} />
         :
         <p>Nothing to show here</p>
       }
+
       {this.props.editor ?
 
         <div className="input-group mt-2">
