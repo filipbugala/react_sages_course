@@ -1,12 +1,9 @@
-import * as React from 'react';
-import { TodoList } from './todos/TodoList';
-import { Todo } from './todos/todo';
-import { ChangeEvent } from 'react';
-// import logo from './logo.svg';
+import * as React from 'react'
+import { Todo } from './todos/todo'
+import { Todos } from './todos/Todos';
 
 interface State {
-  todos: Todo[],
-  newTitle: string
+  todos: Todo[]
 }
 
 class App extends React.Component<{}, State> {
@@ -18,35 +15,19 @@ class App extends React.Component<{}, State> {
         title: 'Test Todo',
         completed: false
       }
-    ],
-    newTitle: ''
+    ]
   }
 
-  addTodo() {
+  addTodo = (title:string) => {
     const todo: Todo = {
       id: Date.now(),
-      title: this.state.newTitle,
+      title,
       completed: false
     }
 
-    // zle:
-    // this.state.todos.push(todo)
-
     this.setState(prevState => ({
-      // todos: prevState.todos.concat(todo)
       todos: [...prevState.todos, todo],
-      newTitle: ''
     }))
-
-  }
-
-  titleChange(event: ChangeEvent<HTMLInputElement>) {
-    // event.persist()
-    const value = event.target.value;
-
-    this.setState({
-      newTitle: value
-    })
   }
 
   public render() {
@@ -55,16 +36,8 @@ class App extends React.Component<{}, State> {
         <div className="row">
           <div className="col">
 
-            <h3>Todos</h3>
-            <TodoList todos={this.state.todos} />
-
-            <div className="input-group">
-              <input type="text" className="form-control"
-                value={this.state.newTitle}
-                onKeyUp={e => e.key == "Enter" && this.addTodo()}
-                onChange={e => this.titleChange(e)} />
-              <button className="btn" onClick={e => this.addTodo()}>Add</button>
-            </div>
+            <Todos todos={this.state.todos} 
+                  addTodo={this.addTodo}/>
 
           </div>
         </div>
