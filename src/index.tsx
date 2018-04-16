@@ -13,28 +13,27 @@ import * as ReactDOM from 'react-dom';
 const lista = [1, 2, 3, 4, 5].reverse()
 
 
-const Section = (props: { list: any[] }) => {
-  return React.createElement('div', {},
-    React.createElement('h1', null, 'Todos'),
-    React.createElement('ul', null,
-      props.list.map(x => React.createElement('li', {
-        key: x,
-        className: "list-item",
-        style: { color: x % 2 == 0 ? 'red' : 'black' }
-      }, 'Item ' + x))
-    ),
-  )
+const Section = (props: { list: any[], title: string }) => {
+  return <div>
+    <h1>{props.title || 'Todos'}</h1>
+    <ul>
+      {props.list.map(
+        x => <li key={x} className="list-item"
+                style={{ color: x % 2 == 0 ? 'red' : 'black' }} >
+            Item {x}
+        </li>
+      )}
+    </ul>
+  </div>
 }
 
 setInterval(() => {
   lista.unshift(lista.length + 1)
 
-
-
-  ReactDOM.render(Section({
-    list: lista
-  }), document.getElementById('root'))
-}, 500)
+  ReactDOM.render(
+     <Section list={lista} title="Todos" />, 
+     document.getElementById('root'))
+}, 1500)
 
 
 
